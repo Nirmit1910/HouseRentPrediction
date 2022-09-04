@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html >
+<!--From https://codepen.io/frytyler/pen/EGdtg-->
+<head>
+  <meta charset="UTF-8">
+  <title>House Rent Prediction</title>
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="/static/style.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+  <h1>Predict House Rent</h1>
+  <br>
+  <br>
+  <br>
+  <br>
+ <div class="login">
+     <!-- Main Input For Receiving Query to our ML -->
+    <form class="form" action="{{ url_for('predict')}}"method="post">
+      <div class="div1">
+        <input type="text" name="Latitude" placeholder="Latitude" required="required" />
+        <input type="text" name="Longitude" placeholder="Longitude" required="required" />
+        <input list="gym" name="gym" placeholder="Gym" required="required" />
+        <datalist id="gym">
+          <option value=1>Yes</option>
+          <option value=0>No</option>
+        </datalist>
+        <input list="lift" name="lift" placeholder="Lift" required="required" />
+        <datalist id="lift">
+          <option value=1>Yes</option>
+          <option value=0>No</option>
+        </datalist>
+        <input list="swimming_pool" name="swimming_pool" placeholder="Swimming Pool" required="required" />
+        <datalist id="swimming_pool">
+          <option value=1>Yes</option>
+          <option value=0>No</option>
+        </datalist>
+        <input list="negotiable" name="negotiable" placeholder="Negotiable" required="required" />
+        <datalist id="negotiable">
+          <option value=1>Yes</option>
+          <option value=0>No</option>
+        </datalist>
+        <input type="text" name="Property_Size" placeholder="Property_Size" required="required" />
+        <input type="text" name="Property_Age" placeholder="Property_Age" required="required" />
+        <input type="text" name="Bathroom" placeholder="Bathroom" required="required" />
+        <input type="text" name="Cup_Board" placeholder="Cupboard" required="required" />
+        <input type="text" name="Floor" placeholder="Floor" required="required" />
+        <input type="text" name="Total_Floor" placeholder="Total_Floor" required="required" />
+        <input type="text" name="Balconies" placeholder="Balconies" required="required" />
+      </div>
+      <div class="div2">
+        <input list="HouseType" type="text" name=" HouseType" placeholder="House Type" value="" required="required" />
+        <datalist id="HouseType">
+          <option value="BHK1" >BHK1</option>
+          <option value="BHK2">BHK2</option>
+          <option value="BHK3">BHK3</option>
+          <option value="BHK4">BHK4</option>
+          <option value="BHK4PLUS">BHK4PLUS</option>
+          <option value="RK1">RK1</option>
+        </datalist>
+        <input list="Lease_type" name="Lease_type" placeholder="Lease_type" required="required" />
+        <datalist id="Lease_type">
+          <option value="ANYONE">ANYONE</option>
+          <option value="BACHELOR">BACHELOR</option>
+          <option value="FAMILY" >FAMILY</option>
+          <option value="COMPANY">COMPANY</option>
+        </datalist>
+        <input list="furnishing" name="furnishing" placeholder="Furnishing" required="required" />
+        <datalist id="furnishing">
+          <option value="Fully-Furnished">Fully-Furnished</option>
+          <option value="Not-Furnished">Not-Furnished</option>
+          <option value="Semi-Furnished">Semi-Furnished</option>
+        </datalist>
+        <input list="parking" name="parking" placeholder="Parking" required="required" />
+        <datalist id="parking">
+          <option value="Both">Both</option>
+          <option value="Four_Wheeler">Four_Wheeler</option>
+          <option value="Two_Wheeler">Two_Wheeler</option>
+          <option value="None">None</option>
+        </datalist>
+        <input list="facing" name="facing" placeholder="Facing" required="required" />
+        <datalist id="facing">
+          <option value="E" >E</option>
+          <option value="N">N</option>
+          <option value="NE">NE</option>
+          <option value="NW">NW</option>
+          <option value="S">S</option>
+          <option value="SE">SE</option>
+          <option value="SW">SW</option>
+          <option value="W">W</option>
+        </datalist>
+        <input list="water_supply" name="water_supply" placeholder="Water_Supply" placeholder="Water_Supply" required="required" />
+        <datalist id="water_supply">
+          <option value="BOREWELL">BOREWELL</option>
+          <option value="CORPPORATION">CORPPORATION</option>
+          <option value="CORP_BORE">CORP_BORE</option>
+        </datalist>
+        <input list="building_type" name="building_type" placeholder="Building Type" placeholder="building_type" required="required" />
+        <datalist id="building_type">
+          <option value="AP">AP</option>
+          <option value="IF">IF</option>
+          <option value="IH">IH</option>
+          <option value="GC">GC</option>
+        </datalist>
+        <input list="Internet" name="Internet" placeholder="Internet" required="required" />
+        <datalist id="Internet">
+          <option value=1>Yes</option>
+          <option value=0>No</option>
+        </datalist>
+        <input list="AC" name="AC" placeholder="AC" required="required" />
+        <datalist id="AC">
+          <option value=1>Yes</option>
+          <option value=0>No</option>
+        </datalist>
+        <input list="Club" name="Club" placeholder="Club" required="required" />
+        <datalist id="Club">
+          <option value=1>Yes</option>
+          <option value=0>No</option>
+        </datalist>
+        <input list="INTERCOM" name="INTERCOM" placeholder="INTERCOM" required="required" />
+        <datalist id="INTERCOM">
+          <option value=1>Yes</option>
+          <option value=0>No</option>
+        </datalist>
+        <input list="POOL" name="POOL" placeholder="POOL" required="required" />
+        <datalist id="POOL">
+          <option value=1>Yes</option>
+          <option value=0>No</option>
+        </datalist>
+        <input list="CPA" name="CPA" placeholder="CPA" required="required" />
+        <datalist id="CPA">
+          <option value=1>Yes</option>
+          <option value=0>No</option>
+        </datalist>
+      </div>
+      <div class="div3">
+        <input list="FS" name="FS" placeholder="FS" required="required" />
+        <datalist id="FS">
+          <option value=1>Yes</option>
+          <option value=0>No</option>
+        </datalist>
+        <input list="SERVANT" name="SERVANT" placeholder="SERVANT" required="required" />
+        <datalist id="SERVANT">
+          <option value=1>Yes</option>
+          <option value=0>No</option>
+        </datalist>
+        <input list="SECURITY" name="SECURITY" placeholder="SECURITY" required="required" />
+        <datalist id="SECURITY">
+          <option value=1>Yes</option>
+          <option value=0>No</option>
+        </datalist>
+        <input list="SC" name="SC" placeholder="SC" required="required" />
+        <datalist id="SC">
+          <option value=1>Yes</option>
+          <option value=0>No</option>
+        </datalist>
+        <input list="GP" name="GP" placeholder="GP" required="required" />
+        <datalist id="GP">
+          <option value=1>Yes</option>
+          <option value=0>No</option>
+        </datalist>
+        <input list="PARK" name="PARK" placeholder="PARK" required="required" />
+        <datalist id="PARK">
+          <option value=1>Yes</option>
+          <option value=0>No</option>
+        </datalist>
+        <input list="RWH" name="RWH" placeholder="RWH" required="required" />
+        <datalist id="RWH">
+          <option value=1>Yes</option>
+          <option value=0>No</option>
+        </datalist>
+        <input list="STP" name="STP" placeholder="STP" required="required" />
+        <datalist id="STP">
+          <option value=1>Yes</option>
+          <option value=0>No</option>
+        </datalist>
+        <input list="HK" name="HK" placeholder="HK" required="required" />
+        <datalist id="HK">
+          <option value=1>Yes</option>
+          <option value=0>No</option>
+        </datalist>
+        <input list="PB" name="PB" placeholder="PB" required="required" />
+        <datalist id="PB">
+          <option value=1>Yes</option>
+          <option value=0>No</option>
+        </datalist>
+        <input list="VP" name="VP" placeholder="VP" required="required" />
+        <datalist id="VP">
+          <option value=1>Yes</option>
+          <option value=0>No</option>
+        </datalist>
+        <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
+        <div class="mark">
+          <mark>{{ prediction_text }}</mark>
+        </div>
+      </div>
+    </form>
+<br>
+
+ </div>
+</body>
+</html>
