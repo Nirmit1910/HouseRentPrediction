@@ -8,7 +8,7 @@ import warnings
 # Ignore all warnings
 warnings.filterwarnings("ignore")
 
-model = pickle.load(open('rf.pkl', 'rb'))
+model = pickle.load(open('st.pkl', 'rb'))
 
 df=pd.read_csv("df1.csv")
 # print(df.shape)
